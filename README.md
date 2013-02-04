@@ -60,7 +60,7 @@ License
 
 (The MIT License)
 
-Copyright (C) 2012, Georges-Etienne Legendre <legege@legege.com>
+Copyright (C) 2013, Georges-Etienne Legendre <legege@legege.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the
