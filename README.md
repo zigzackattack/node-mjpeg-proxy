@@ -1,41 +1,87 @@
 node-mjpeg-proxy
 ================
 
-This is a simple implementation of a MJPEG proxy written with node.js.
+A node.js module to proxy MJPEG requests. Supports multiple client consuming a single stream. Fixes an iOS 6 issue with some MJPEG steams.
 
-## Documentation
+Installation
+------------
+
+From npm:
+
+``` bash
+$ npm install mjpeg-proxy
+```
+
+From source:
+
+``` bash
+$ git clone https://github.com/legege/node-mjpeg-proxy.git
+$ cd node-mjpeg-proxy
+$ npm install
+```
+
+Example
+-------
 
 ### Example Usage
 
-    var mpjegproxy = require("./lib/node-mjpeg-proxy");
-    mpjegproxy.createProxy("http://192.1.2.3:8080/videofeed");
+``` js
+var MjpegProxy = require('mjpeg-proxy').MjpegProxy;
+var express = require('express');
+var app = express();
 
-Here, it will create a proxy to the source video feed (http://192.1.2.3:8080/videofeed) with the default options (below). You can now access the feed at http://localhost:5080/ .
+app.get('/index1.jpg', new MjpegProxy('http://admin:admin@192.168.1.109/cgi/mjpg/mjpg.cgi').proxyRequest);
+app.listen(8080);
+```
 
-### Proxy
+Here, it will create a proxy to the source video feed (`http://admin:admin@192.168.1.109/cgi/mjpg/mjpg.cgi`). You can now access the feed at `http://localhost:8080/index1.jpg`.
 
-    Proxy.createProxy(sourceURL, [options]);
+API
+---
 
-Returns: a `Proxy` instance.
+### MjpegProxy
 
-Arguments:
+``` js
+var mjpegProxy = new MjpegProxy(mjpegUrl);
+``` 
 
-- *sourceURL*
+Returns: a `MjpegProxy` instance for the MJPEG stream at `mjpegUrl` URL.
 
-  The source URL of the MJPEG feed to be proxied.
+Credits
+-------
 
-Options:
+Original prototype version from:
 
-- *port*
+  * Phil Rene ([philrene](http://github.com/philrene))
+  * Chris Chua ([chrisirhc](http://github.com/chrisirhc))
 
-  The destination port. Defaults to `5080`.
+License
+-------
 
-## TODO
+(The MIT License)
 
-- Add a resource URL so that it can serve on certain resource URLs rather than require its onw http.Server instance.
+Copyright (C) 2012, Georges-Etienne Legendre <legege@legege.com>
 
-## Credits
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to permit
+persons to whom the Software is furnished to do so, subject to the
+following conditions:
 
-- Phil Rene ([philrene](http://github.com/philrene))
+The above copyright notice and this permission notice shall be included
+in all copies or substantial portions of the Software.
 
-- Chris Chua ([chrisirhc](http://github.com/chrisirhc))
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+A different license may apply to other software included in this package, 
+including libftdi and libusb. Please consult their respective license files
+for the terms of their individual licenses.
+
